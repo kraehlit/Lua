@@ -47,7 +47,7 @@ add_library(lua_include INTERFACE)
 
 target_include_directories(lua_include INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_link_libraries(lua_internal INTERFACE lua_include)
@@ -146,6 +146,9 @@ install(DIRECTORY include/ TYPE INCLUDE)
 
 include(CMakePackageConfigHelpers)
 
+if (NOT CMAKE_INSTALL_DATADIR)
+    set(CMAKE_INSTALL_DATADIR "share/cmake")
+endif()
 get_target_property(LUA_EXPORT_LIBRARY Lua::Library ALIASED_TARGET)
 write_basic_package_version_file(
     LuaConfigVersion.cmake
@@ -155,17 +158,17 @@ write_basic_package_version_file(
 
 install(EXPORT LuaTargets
         FILE LuaTargets.cmake
-        DESTINATION "share/cmake/Lua"
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/Lua"
         NAMESPACE Lua::
 )
 
 configure_package_config_file(
     LuaConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/LuaConfig.cmake"
-    INSTALL_DESTINATION "share/cmake/Lua"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/Lua"
 )
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/LuaConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/LuaConfigVersion.cmake"
-        DESTINATION "share/cmake/Lua"
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/Lua"
 )

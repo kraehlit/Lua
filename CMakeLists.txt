@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.5)
 project(lua LANGUAGES C VERSION 5.4.7)
 
+
 option(LUA_SUPPORT_DL "Support dynamic loading of compiled modules" OFF)
 option(LUA_BUILD_AS_CXX "Build lua as C++" OFF)
 option(LUA_ENABLE_SHARED "Build dynamic liblua" ON)
 option(LUA_ENABLE_TESTING "Build and run tests" ON)
+#set( CMAKE_INSTALL_INCLUDEDIR "include/lua" CACHE STRING "C header files (include)")
+set( CMAKE_INSTALL_DATADIR "share/cmake" CACHE STRING "Prefix for CMake package files installation directory")
+include(GNUInstallDirs)
+
 if (NOT CMAKE_DEBUG_POSTFIX)
     set(CMAKE_DEBUG_POSTFIX "d")
 endif()
