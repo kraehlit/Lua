@@ -57,6 +57,7 @@ if(LUA_ENABLE_SHARED)
     target_link_libraries(lua_shared PRIVATE lua_internal PUBLIC lua_include)
     set_target_properties(lua_shared PROPERTIES
         VERSION "${PACKAGE_VERSION}"
+        OUTPUT_NAME "lua"
     )
     if(WIN32)
         target_compile_definitions(lua_shared PRIVATE LUA_BUILD_AS_DLL)
